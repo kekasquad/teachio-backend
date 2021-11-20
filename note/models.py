@@ -2,8 +2,10 @@ import uuid
 
 from django.db import models
 
+from core.models import TimeStampedModel
 
-class Note(models.Model):
+
+class Note(TimeStampedModel):
 
     id = models.UUIDField(
         primary_key=True,
