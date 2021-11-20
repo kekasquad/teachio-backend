@@ -18,6 +18,7 @@ urlpatterns = [
     re_path(r'^notification/', include('api.notification.urls')),
     re_path(r'^stats/', include('api.stats.urls')),
     re_path(r'^note/', include('api.note.urls')),
+    re_path(r'^payment/', include('api.payment.urls')),
     re_path(
         r'^swagger/$',
         schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'
