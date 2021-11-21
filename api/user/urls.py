@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     re_path(
-        r'^$',
+        r'^current/?$',
         views.CurrentUserAPIView.as_view(),
         name='user_list'
     ),
