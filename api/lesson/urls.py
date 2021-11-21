@@ -3,6 +3,11 @@ from . import views
 
 urlpatterns = [
     re_path(
+        r'^user/?$',
+        views.LessonListAPIView.as_view(),
+        name='user_lessons_list'
+    ),
+    re_path(
         r'^$',
         views.LessonListCreateAPIView.as_view(),
         name='lesson_list_create'
@@ -12,9 +17,4 @@ urlpatterns = [
         views.LessonRetrieveUpdateDestroyAPIView.as_view(),
         name='lesson_retrieve_update_destroy'
     ),
-    re_path(
-        r'^user/?$',
-        views.LessonListAPIView.as_view(),
-        name='user_lessons_list'
-    )
 ]
