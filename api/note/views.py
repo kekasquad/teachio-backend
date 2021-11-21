@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import SAFE_METHODS
 
 from note.models import Note
@@ -24,3 +24,11 @@ class NoteRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         if self.request.method in SAFE_METHODS:
             return serializers.NoteRetrieveSerializer
         return serializers.NoteUpdateSerializer
+
+
+class NoteListAPIView(ListAPIView):
+    serializer_class = serializers.NoteRetrieveSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_teacher:
+            return Note.objects.filter(user=self.request.user).order_by('-updated', '-created')

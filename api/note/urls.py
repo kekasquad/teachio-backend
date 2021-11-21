@@ -11,5 +11,10 @@ urlpatterns = [
         r'^(?P<pk>[^/]+)/?$',
         views.NoteRetrieveUpdateDestroyAPIView.as_view(),
         name='note_retrieve_update_destroy'
+    ),
+    re_path(
+        r'^user/?$',
+        views.NoteListAPIView.as_view(),
+        name='user_notes_list'
     )
 ]

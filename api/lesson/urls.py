@@ -11,5 +11,10 @@ urlpatterns = [
         r'^(?P<pk>[^/]+)/?$',
         views.LessonRetrieveUpdateDestroyAPIView.as_view(),
         name='lesson_retrieve_update_destroy'
+    ),
+    re_path(
+        r'^user/?$',
+        views.LessonListAPIView.as_view(),
+        name='user_lessons_list'
     )
 ]

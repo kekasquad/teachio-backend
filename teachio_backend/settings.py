@@ -33,7 +33,9 @@ INSTALLED_APPS = [
     'lesson',
     'note',
     'notification',
-    'stats'
+    'stats',
+    'chat',
+    'relationship'
 ]
 
 AUTH_USER_MODEL = 'core.User'
