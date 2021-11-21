@@ -20,7 +20,7 @@ class ChatCreateAPIView(CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
-        if self.request.user.id not in (
+        if self.request.user not in (
                 serializer.validated_data['teacher'],
                 serializer.validated_data['student']
         ):

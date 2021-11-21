@@ -15,7 +15,7 @@ class MessageCreateAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         try:
-            chat = Chat.objects.get(pk=serializer.validated_data['chat'])
+            chat = serializer.validated_data['chat']
             if str(self.request.user.pk) not in (str(chat.student.pk), str(chat.teacher.pk)):
                 raise ValidationError({'error': 'User must be a member of the chat'})
         except Chat.DoesNotExist:

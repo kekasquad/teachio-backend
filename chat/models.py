@@ -9,6 +9,7 @@ class Chat(TimeStampedModel):
     class Meta:
         verbose_name = 'chat'
         verbose_name_plural = 'chats'
+        unique_together = (('student', 'teacher'),)
 
     id = models.UUIDField(
         primary_key=True,
