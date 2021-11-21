@@ -19,10 +19,6 @@ class ChatCreateSerializer(serializers.ModelSerializer):
                 'student': 'There is no relationship between this teacher and student',
                 'teacher': 'There is no relationship between this teacher and student'
             })
-        if User.objects.get(pk=attrs.get('student')).is_teacher:
-            raise ValidationError({'student': 'student is teacher'})
-        if not User.objects.get(pk=attrs.get('teacher')).is_teacher:
-            raise ValidationError({'teacher': 'teacher is student'})
         return attrs
 
 
