@@ -12,7 +12,7 @@ class User(AbstractUser):
 
     id = models.UUIDField(
         primary_key=True,
-        default=uuid.uuid1,
+        default=uuid.uuid4,
         editable=False
     )
     email = models.EmailField(

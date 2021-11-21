@@ -31,6 +31,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
         required=True,
         allow_blank=False,
     )
+    is_teacher = serializers.BooleanField(
+        default=False
+    )
 
     def validate(self, attrs):
         attrs['username'] = attrs.get('email')
