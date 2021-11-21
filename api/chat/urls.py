@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     re_path(
         r'^(?P<pk>[^/]+)/?$',
-        views.ChatRetrieveUpdateDestroyAPIView.as_view(),
+        views.ChatDestroyAPIView.as_view(),
         name='chat_retrieve_update_destroy'
     ),
 ]
