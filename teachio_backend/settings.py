@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'notification',
     'stats',
     'chat',
-    'relationship'
+    'relationship',
+    'message'
 ]
 
 AUTH_USER_MODEL = 'core.User'
