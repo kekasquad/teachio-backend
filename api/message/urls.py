@@ -5,7 +5,7 @@ urlpatterns = [
     re_path(
         r'^$',
         views.MessageCreateAPIView.as_view(),
-        name='chat_messages_list'
+        name='message_create'
     ),
     re_path(
         r'^(?P<pk>[^/]+)/?$',

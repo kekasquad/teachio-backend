@@ -1,5 +1,5 @@
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+    RetrieveUpdateDestroyAPIView, ListAPIView, CreateAPIView
 )
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 
@@ -8,14 +8,10 @@ from . import serializers
 from ..permissions import IsTeacherWrite
 
 
-class LessonListCreateAPIView(ListCreateAPIView):
+class LessonCreateAPIView(CreateAPIView):
     queryset = Lesson.objects.all().order_by('-updated', '-created')
+    serializer_class = serializers.LessonCreateSerializer
     permission_classes = (IsAuthenticated, IsTeacherWrite)
-
-    def get_serializer_class(self):
-        if self.request.method in SAFE_METHODS:
-            return serializers.LessonRetrieveSerializer
-        return serializers.LessonCreateSerializer
 
 
 class LessonRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

@@ -9,8 +9,8 @@ urlpatterns = [
     ),
     re_path(
         r'^$',
-        views.LessonListCreateAPIView.as_view(),
-        name='lesson_list_create'
+        views.LessonCreateAPIView.as_view(),
+        name='lesson_create'
     ),
     re_path(
         r'^(?P<pk>[^/]+)/?$',

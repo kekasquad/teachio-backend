@@ -10,7 +10,7 @@ urlpatterns = [
     re_path(
         r'^$',
         views.ChatCreateAPIView.as_view(),
-        name='chat_list_create'
+        name='chat_create'
     ),
     re_path(
         r'^(?P<chat_id>[^/]+)/messages/?$',
@@ -20,6 +20,6 @@ urlpatterns = [
     re_path(
         r'^(?P<pk>[^/]+)/?$',
         views.ChatDestroyAPIView.as_view(),
-        name='chat_retrieve_update_destroy'
+        name='chat_destroy'
     ),
 ]
