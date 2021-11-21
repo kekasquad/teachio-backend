@@ -1,14 +1,16 @@
 from django.contrib.auth.models import AnonymousUser
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, RetrieveAPIView
-from rest_framework.permissions import SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
 
 from core.models import User
 from . import serializers
+from ..permissions import IsSelfWrite
 
 
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
+    permission_classes = (IsAuthenticated, IsSelfWrite,)
 
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
@@ -18,6 +20,7 @@ class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
 class CurrentUserAPIView(RetrieveAPIView):
     serializer_class = serializers.UserRetrieveSerializer
+    permission_classes = (IsAuthenticated,)
 
     def retrieve(self, request, *args, **kwargs):
         user = self.request.user

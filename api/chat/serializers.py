@@ -22,16 +22,8 @@ class ChatCreateSerializer(serializers.ModelSerializer):
         return attrs
 
 
-
 class ChatRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
         read_only_fields = ('id', 'student', 'teacher', 'teacher_unread',  'student_unread', 'created', 'updated')
         fields = read_only_fields
-
-
-class ChatUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Chat
-        read_only_fields = ('id', 'student', 'teacher', 'created', 'updated')
-        fields = read_only_fields + ('teacher_unread',  'student_unread')

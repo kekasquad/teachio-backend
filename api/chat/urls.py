@@ -9,7 +9,7 @@ urlpatterns = [
     ),
     re_path(
         r'^$',
-        views.ChatListCreateAPIView.as_view(),
+        views.ChatCreateAPIView.as_view(),
         name='chat_list_create'
     ),
     re_path(
@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     re_path(
         r'^(?P<pk>[^/]+)/?$',
-        views.ChatRetrieveUpdateDestroyAPIView.as_view(),
+        views.ChatDestroyAPIView.as_view(),
         name='chat_retrieve_update_destroy'
     ),
 ]
