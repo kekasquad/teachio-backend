@@ -13,6 +13,11 @@ urlpatterns = [
         name='chat_list_create'
     ),
     re_path(
+        r'^(?P<chat_id>[^/]+)/messages/?$',
+        views.ChatMessagesAPIView.as_view(),
+        name='chat_messages_destroy'
+    ),
+    re_path(
         r'^(?P<pk>[^/]+)/?$',
         views.ChatRetrieveUpdateDestroyAPIView.as_view(),
         name='chat_retrieve_update_destroy'
