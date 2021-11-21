@@ -9,7 +9,7 @@ urlpatterns = [
     ),
     re_path(
         r'^$',
-        views.ChatListCreateAPIView.as_view(),
+        views.ChatCreateAPIView.as_view(),
         name='chat_list_create'
     ),
     re_path(

@@ -1,12 +1,16 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
-from rest_framework.permissions import SAFE_METHODS
+from rest_framework.generics import (
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+)
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 
 from note.models import Note
 from . import serializers
+from ..permissions import IsTeacher
 
 
 class NoteListCreateAPIView(ListCreateAPIView):
     queryset = Note.objects.all().order_by('-updated', '-created')
+    permission_classes = (IsAuthenticated, IsTeacher,)
 
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
@@ -19,6 +23,7 @@ class NoteListCreateAPIView(ListCreateAPIView):
 
 class NoteRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Note.objects.all()
+    permission_classes = (IsAuthenticated, IsTeacher,)
 
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
@@ -28,6 +33,7 @@ class NoteRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
 class NoteListAPIView(ListAPIView):
     serializer_class = serializers.NoteRetrieveSerializer
+    permission_classes = (IsAuthenticated, IsTeacher,)
 
     def get_queryset(self):
         if self.request.user.is_teacher:
