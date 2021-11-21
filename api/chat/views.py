@@ -1,8 +1,12 @@
+from django.core.exceptions import ValidationError
+from django.http import Http404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 from rest_framework.permissions import SAFE_METHODS
 
 from chat.models import Chat
 from . import serializers
+from ..message.serializers import MessageRetrieveSerializer
+from message.models import Message
 
 
 class ChatListCreateAPIView(ListCreateAPIView):
@@ -31,3 +35,13 @@ class ChatListAPIView(ListAPIView):
             return Chat.objects.filter(teacher=self.request.user).order_by('-updated', '-created')
         else:
             return Chat.objects.filter(student=self.request.user).order_by('-updated', '-created')
+
+
+class ChatMessagesAPIView(ListAPIView):
+    serializer_class = MessageRetrieveSerializer
+
+    def get_queryset(self):
+        try:
+            return Message.objects.filter(chat_id=self.kwargs['chat_id']).order_by('-created')
+        except ValidationError:
+            raise Http404
