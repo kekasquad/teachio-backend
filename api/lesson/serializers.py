@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from lesson.models import Lesson
+from relationship.models import Relationship
 
 
 class LessonCreateSerializer(serializers.ModelSerializer):
@@ -8,6 +10,15 @@ class LessonCreateSerializer(serializers.ModelSerializer):
         model = Lesson
         read_only_fields = ('id', 'payment_status', 'created', 'updated')
         fields = read_only_fields + ('cost', 'title', 'description', 'start', 'end', 'student', 'teacher')
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        if not Relationship.objects.filter(student_id=attrs.get('student'), teacher_id=attrs.get('teacher')).exists():
+            raise ValidationError({
+                'student': 'There is no relationship between this teacher and student',
+                'teacher': 'There is no relationship between this teacher and student'
+            })
+        return attrs
 
 
 class LessonRetrieveSerializer(serializers.ModelSerializer):
