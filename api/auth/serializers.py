@@ -44,3 +44,12 @@ class UserCreateSerializer(serializers.ModelSerializer):
             return User.objects.create_user(**validated_data)
         except IntegrityError:
             raise ValidationError({'username': ['User with this username already exists']})
+
+
+class UserActivateSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    code = serializers.CharField(required=True, max_length=4, min_length=4)
+
+
+class ResendActivationCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
