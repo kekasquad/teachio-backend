@@ -22,11 +22,11 @@ class Message(TimeStampedModel):
     )
     sender = models.ForeignKey(
         'core.User',
-        related_name='sender',
+        related_name='user_messages',
         on_delete=models.DO_NOTHING
     )
     chat = models.ForeignKey(
         'chat.Chat',
-        related_name='chat',
+        related_name='chat_messages',
         on_delete=models.CASCADE
     )
