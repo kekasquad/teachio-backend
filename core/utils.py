@@ -15,8 +15,8 @@ def send_code(user: User):
 
     send_mail(
         'Verify your account',
-        f'Here is your code for verification: {code}\nTeach.io',
-        'noreply@teach.io',
+        f'Here is your verification code: {code}\n\nTeach.io',
+        'noreply@danil.co',
         [user.email],
         fail_silently=False,
     )

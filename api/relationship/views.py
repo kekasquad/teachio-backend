@@ -3,7 +3,6 @@ from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 
 from relationship.models import Relationship
 from . import serializers
-from ..permissions import IsTeacherWrite
 
 
 class RelationshipListCreateAPIView(ListCreateAPIView):
