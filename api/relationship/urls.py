@@ -13,6 +13,11 @@ urlpatterns = [
         name='relationship_list_create'
     ),
     re_path(
+        r'^link/?$',
+        views.RelationshipLinkAPIView.as_view(),
+        name='relationship_link'
+    ),
+    re_path(
         r'^(?P<pk>[^/]+)/?$',
         views.RelationshipRetrieveDestroyAPIView.as_view(),
         name='relationship_destroy'
