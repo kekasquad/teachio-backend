@@ -9,7 +9,7 @@ urlpatterns = [
     ),
     re_path(
         r'^$',
-        views.RelationshipListCreateAPIView.as_view(),
+        views.RelationshipCreateAPIView.as_view(),
         name='relationship_list_create'
     ),
     re_path(
@@ -18,8 +18,8 @@ urlpatterns = [
         name='relationship_link'
     ),
     re_path(
-        r'^(?P<pk>[^/]+)/?$',
+        r'^(?P<teacher_id>[^/]+)/(?P<student_id>[^/]+)/?$',
         views.RelationshipRetrieveDestroyAPIView.as_view(),
-        name='relationship_destroy'
+        name='relationship_retrieve_destroy'
     ),
 ]

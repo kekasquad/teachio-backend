@@ -24,6 +24,7 @@ urlpatterns = [
     re_path(r'^user/', include('api.user.urls')),
     re_path(r'^message/', include('api.message.urls')),
     re_path(r'^finance/', include('api.finance.urls')),
+    re_path(r'^student_note/', include('api.student_note.urls')),
     re_path(
         r'^swagger/$',
         schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'

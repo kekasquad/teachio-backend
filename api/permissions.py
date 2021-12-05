@@ -36,3 +36,12 @@ class IsMessageSender(BasePermission):
             request.user and
             request.user == view.get_object().sender
         )
+
+
+class IsRelationshipParticipant(BasePermission):
+    def has_permission(self, request, view):
+        relationship = view.get_object()
+        return bool(
+            request.user and
+            request.user in (relationship.student, relationship.teacher)
+        )

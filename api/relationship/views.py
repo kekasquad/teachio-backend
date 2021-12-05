@@ -1,27 +1,51 @@
+from django.http import Http404
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView, ListAPIView, RetrieveDestroyAPIView, GenericAPIView
+from rest_framework.generics import  ListAPIView, RetrieveDestroyAPIView, GenericAPIView, CreateAPIView
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
 
+from core.models import StudentNote
 from relationship.models import Relationship
 from . import serializers
-from ..permissions import IsTeacher
+from ..permissions import IsTeacher, IsRelationshipParticipant
 
 
-class RelationshipListCreateAPIView(ListCreateAPIView):
+class RelationshipCreateAPIView(CreateAPIView):
     queryset = Relationship.objects.all().order_by('-updated', '-created')
+    serializer_class = serializers.RelationshipCreateSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get_serializer_class(self):
-        if self.request.method in SAFE_METHODS:
-            return serializers.RelationshipRetrieveSerializer
-        return serializers.RelationshipCreateSerializer
+    def perform_create(self, serializer):
+        relationship = serializer.save()
+
+        StudentNote(
+            teacher=relationship.teacher,
+            student=relationship.student,
+            description=""
+        ).save()
 
 
 class RelationshipRetrieveDestroyAPIView(RetrieveDestroyAPIView):
     queryset = Relationship.objects.all()
     serializer_class = serializers.RelationshipRetrieveSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsRelationshipParticipant)
+
+    def perform_destroy(self, instance):
+        StudentNote.objects.get(
+            student=instance.student,
+            teacher=instance.teacher,
+        ).delete()
+
+        super().perform_destroy(instance)
+
+    def get_object(self):
+        try:
+            return Relationship.objects.get(
+                teacher=self.kwargs['teacher_id'],
+                student=self.kwargs['student_id'],
+            )
+        except Relationship.DoesNotExist:
+            raise Http404
 
 
 class RelationshipListAPIView(ListAPIView):
