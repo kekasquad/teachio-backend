@@ -3,7 +3,8 @@ from django.db.models import Q
 from django.http import Http404
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.generics import (
-    ListAPIView, DestroyAPIView, CreateAPIView
+    ListAPIView, DestroyAPIView,
+    CreateAPIView, RetrieveAPIView
 )
 from rest_framework.permissions import IsAuthenticated
 
@@ -33,6 +34,25 @@ class ChatDestroyAPIView(DestroyAPIView):
     queryset = Chat.objects.all()
     serializer_class = serializers.ChatRetrieveSerializer
     permission_classes = (IsAuthenticated, IsChatParticipant)
+
+
+class ChatWithUserAPIView(RetrieveAPIView):
+    serializer_class = serializers.ChatRetrieveSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        try:
+            if self.request.user.is_teacher:
+                return Chat.objects.get(
+                    student=self.kwargs['user_id'],
+                    teacher=self.request.user
+                )
+            return Chat.objects.get(
+                student=self.request.user,
+                teacher=self.kwargs['user_id']
+            )
+        except Chat.DoesNotExist:
+            raise Http404
 
 
 class ChatListAPIView(ListAPIView):
