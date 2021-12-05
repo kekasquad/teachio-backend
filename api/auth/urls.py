@@ -17,8 +17,18 @@ urlpatterns = [
         name='auth_token_refresh'
     ),
     re_path(
-        r'^signup/?',
+        r'^signup/?$',
         views.SignUpAPIView.as_view(),
         name='auth_signup'
-    )
+    ),
+    re_path(
+        r'^activate/resend/?$',
+        views.ResendActivationCode.as_view(),
+        name='auth_activate'
+    ),
+    re_path(
+        r'^activate/?$',
+        views.ActivateAPIView.as_view(),
+        name='auth_activate'
+    ),
 ]
