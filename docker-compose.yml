@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    image: teachio:${IMAGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:8000:8000"
+    restart: always
+    environment:
+      - "DATABASE_URL=postgres://teachio:s3cret@postgres:5432/teachio"
+    env_file: .env
+    depends_on:
+      - postgres
+
+  migrations:
+    image: teachio:${IMAGE_TAG:-latest}
+    depends_on:
+      - postgres
+    command: "python manage.py migrate"
+    environment:
+      - "DATABASE_URL=postgres://teachio:s3cret@postgres:5432/teachio"
+    env_file: .env
+    depends_on:
+      - postgres
+    profiles:
+      - tools
+
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=teachio
+      - POSTGRES_PASSWORD=s3cret
+      - POSTGRES_DB=teachio
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
