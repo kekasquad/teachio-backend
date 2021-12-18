@@ -1,11 +1,12 @@
-version: '3'
+version: "3.8"
 
 services:
   postgres:
-    restart: always
-    image: postgres:14.0-alpine
+    image: postgres:14-alpine
     environment:
+      - POSTGRES_USER=teachio
       - POSTGRES_PASSWORD=s3cret
+      - POSTGRES_DB=teachio
     ports:
       - "5432:5432"
     volumes:
