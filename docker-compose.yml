@@ -3,7 +3,7 @@ version: "3.8"
 services:
   app:
     build: .
-    image: teachio:${IMAGE_TAG:-latest}
+    image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
     ports:
       - "127.0.0.1:8000:8000"
     restart: always
@@ -14,7 +14,7 @@ services:
       - postgres
 
   migrations:
-    image: teachio:${IMAGE_TAG:-latest}
+    image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
     depends_on:
       - postgres
     command: "python manage.py migrate"

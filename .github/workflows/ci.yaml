@@ -49,3 +49,21 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          name: id_ed25519
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          config: ${{ secrets.SSH_CONFIG }}
+          if_key_exists: fail
+      - name: Pull and restart on server
+        run: |
+          ssh deploy-host-01 'cd nginx/apps/teachio-backend && && ./deploy.sh'
