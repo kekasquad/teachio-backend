@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  app:
+  teachio:
     build: .
     image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
     ports:

@@ -45,6 +45,13 @@ jobs:
         # Temp fix
         # https://github.com/docker/build-push-action/issues/252
         # https://github.com/moby/buildkit/issues/1896
+
+      - name: Notify if failed
+        if: ${{ failure() }}
+        env:
+          NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
+        run: curl -X POST ${NOTIFY_URL} --data-urlencode 'message=$GITHUB_REPOSITORY build and push failed' --data-urlencode 'disable_notification=true'
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -66,4 +73,15 @@ jobs:
           if_key_exists: fail
       - name: Pull and restart on server
         run: |
-          ssh deploy-host-01 'cd nginx/apps/teachio-backend && && ./deploy.sh'
+          ssh deploy-host-01 'cd nginx/apps/teachio-backend && ./deploy.sh'
+
+      - name: Notify success
+        env:
+          NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
+        run: curl -X POST ${NOTIFY_URL} --data-urlencode "message=$GITHUB_REPOSITORY deployed successfully" --data-urlencode 'disable_notification=true'
+
+      - name: Notify if failed
+        if: ${{ failure() }}
+        env:
+          NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
+        run: curl -X POST ${NOTIFY_URL} --data-urlencode "message=$GITHUB_REPOSITORY teachio-backend" --data-urlencode 'disable_notification=true'
