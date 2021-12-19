@@ -324,3 +324,6 @@ fabric.properties
 
 # macOS
 *.DS_Store
+
+# Custom
+static
