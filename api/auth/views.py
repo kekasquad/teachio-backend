@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.conf import settings
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import CreateAPIView, GenericAPIView
@@ -16,10 +17,11 @@ class SignUpAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        user.is_active = False
-        user.save()
+        if settings.EMAIL_ENABLED:
+            user.is_active = False
+            user.save()
 
-        send_code(user)
+            send_code(user)
 
 
 class ActivateAPIView(GenericAPIView):

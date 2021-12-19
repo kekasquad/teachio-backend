@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AnonymousUser
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, RetrieveAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
 from rest_framework.response import Response
 
@@ -28,3 +28,10 @@ class CurrentUserAPIView(RetrieveAPIView):
             return Response({'error': 'No token'}, content_type='application/json', status=401)
         serializer = self.get_serializer(self.request.user)
         return Response(serializer.data)
+
+
+class AddTokenAPIView(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = serializers.AddTokenSerializer
+    permission_classes = (IsAuthenticated,)
+

@@ -2,6 +2,7 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import dj_database_url
+import firebase_admin
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_celery_results',
     'django_celery_beat',
+    'fcm_django',
 
     'core',
     'lesson',
@@ -165,6 +167,7 @@ EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_ENABLED = config('EMAIL_ENABLED', cast=bool, default=False)
 
 # Celery
 CELERY_TIMEZONE = TIME_ZONE
@@ -174,3 +177,9 @@ CELERY_BROKER_URL = config(
     'CELERY_BROKER_URL', default='amqp://teachio:teachio@localhost:5672/%2f')
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_TASK_SERIALIZER = 'json'
+
+# Firebase
+FIREBASE_APP = firebase_admin.initialize_app()
+FCM_DJANGO_SETTINGS = {
+    'FCM_SERVER_KEY': config('FCM_SERVER_KEY')
+}
