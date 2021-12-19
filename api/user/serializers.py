@@ -15,3 +15,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         model = User
         read_only_fields = ('id', 'email', 'is_teacher')
         fields = read_only_fields + ('first_name', 'last_name')
+
+
+class AddTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('firebase_token',)

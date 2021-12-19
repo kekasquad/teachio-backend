@@ -29,3 +29,8 @@ class User(AbstractUser):
         null=False,
         default=False
     )
+    firebase_token = models.CharField(
+        max_length=50,
+        null=True,
+        blank=False
+    )
