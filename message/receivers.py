@@ -18,7 +18,7 @@ def message_create_update_receiver(created, instance, **_):
 
         if instance.sender.is_teacher:
             send_notification(
-                instance.chat.student,
+                str(instance.chat.student.id),
                 f'New message from {instance.sender.get_full_name()}',
                 f'You have {instance.chat.student_unread} unread messages',
                 {
@@ -27,7 +27,7 @@ def message_create_update_receiver(created, instance, **_):
             )
         else:
             send_notification(
-                instance.chat.teacher,
+                str(instance.chat.teacher.id),
                 f'New message from {instance.sender.get_full_name()}',
                 f'You have {instance.chat.teacher_unread} unread messages',
                 {
