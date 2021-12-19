@@ -176,12 +176,12 @@ LOGGING = {
         'django': {
             'handlers': ['console'],
             'level': config('LOG_LEVEL', default='INFO'),
-            'propagate': False,
+            'propagate': True,
         },
         'django.request': {
             'handlers': ['console'],
-            'level': 'ERROR',
-            'propagate': False,
+            'level': 'WARNING',
+            'propagate': True,
         },
     },
 }

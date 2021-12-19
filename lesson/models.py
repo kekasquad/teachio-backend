@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib import admin
 
 from core.models import TimeStampedModel
 
@@ -68,3 +69,6 @@ class Lesson(TimeStampedModel):
 
     def get_status(self) -> PaymentStatus:
         return self.PaymentStatus[self.payment_status]
+
+
+admin.site.register(Lesson)

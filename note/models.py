@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.contrib import admin
 
 from core.models import TimeStampedModel
 
@@ -22,3 +23,6 @@ class Note(TimeStampedModel):
         null=False,
         blank=False,
     )
+
+
+admin.site.register(Note)
