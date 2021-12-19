@@ -9,18 +9,18 @@ from .models import Message
 @receiver(post_save, sender=Message)
 def message_create_update_receiver(created, instance, **_):
     if created:
-        with transaction.atomic():
-            if instance.sender.is_teacher:
-                instance.chat.student_unread += 1
-            else:
-                instance.chat.teacher_unread += 1
-            instance.chat.save()
+#         with transaction.atomic():
+#             if instance.sender.is_teacher:
+#                 instance.chat.student_unread += 1
+#             else:
+#                 instance.chat.teacher_unread += 1
+#             instance.chat.save()
 
         if instance.sender.is_teacher:
             send_notification(
                 str(instance.chat.student.id),
                 f'New message from {instance.sender.get_full_name()}',
-                f'You have {instance.chat.student_unread} unread messages',
+                f'You have unread messages',
                 {
                     'chat_id': str(instance.chat.id)
                 }
@@ -29,7 +29,7 @@ def message_create_update_receiver(created, instance, **_):
             send_notification(
                 str(instance.chat.teacher.id),
                 f'New message from {instance.sender.get_full_name()}',
-                f'You have {instance.chat.teacher_unread} unread messages',
+                f'You have unread messages',
                 {
                     'chat_id': str(instance.chat.id)
                 }
