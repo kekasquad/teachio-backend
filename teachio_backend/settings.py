@@ -88,6 +88,10 @@ WSGI_APPLICATION = 'teachio_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # },
     'default': dj_database_url.config(
         default=config(
             "DATABASE_URL", default="postgres://teachio:s3cret@localhost:5432/teachio"),
@@ -171,7 +175,6 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BROKER_URL = config(
     'CELERY_BROKER_URL', default='amqp://teachio:teachio@localhost:5672/%2f')
-CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_TASK_SERIALIZER = 'json'
 

@@ -13,6 +13,11 @@ urlpatterns = [
         name='lesson_create'
     ),
     re_path(
+        r'^(?P<pk>[^/]+)/payment-confirmation-request?$',
+        views.LessonPaymentConfirmationRequestView.as_view(),
+        name='lesson_payment_confirmation_request'
+    ),
+    re_path(
         r'^(?P<pk>[^/]+)/?$',
         views.LessonRetrieveUpdateDestroyAPIView.as_view(),
         name='lesson_retrieve_update_destroy'
