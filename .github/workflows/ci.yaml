@@ -84,4 +84,4 @@ jobs:
         if: ${{ failure() }}
         env:
           NOTIFY_URL: ${{ secrets.NOTIFY_URL }}
-        run: curl -X POST ${NOTIFY_URL} --data-urlencode "message=$GITHUB_REPOSITORY deploy failed, more info https://github.com/$GITHUB_REPOSITORY/runs/$GITHUB_ACTION" --data-urlencode 'disable_notification=true'
+        run: curl -X POST ${NOTIFY_URL} --data-urlencode "message=$GITHUB_REPOSITORY deploy failed, more info https://github.com/$GITHUB_REPOSITORY/actions/workflows/ci.yaml" --data-urlencode 'disable_notification=true'
