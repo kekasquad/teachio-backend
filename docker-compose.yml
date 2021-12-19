@@ -39,6 +39,7 @@ services:
       - "CELERY_BROKER_URL=redis://redis:6379"
       # - "CELERY_BROKER_URL=amqp://teachio:teachio@rabbitmq:5672/%2f"
     env_file: .env
+    profiles: ['flower']
 
   migrations:
     image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
