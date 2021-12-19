@@ -183,3 +183,4 @@ FIREBASE_APP = firebase_admin.initialize_app()
 FCM_DJANGO_SETTINGS = {
     'FCM_SERVER_KEY': config('FCM_SERVER_KEY')
 }
+UPDATE_ON_DUPLICATE_REG_ID = True
