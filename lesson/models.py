@@ -31,6 +31,11 @@ class Lesson(TimeStampedModel):
         blank=True,
         null=True,
     )
+    homework = models.TextField(
+        max_length=1000,
+        blank=True,
+        null=True
+    )
     start = models.DateTimeField(
         blank=False,
         null=False,
