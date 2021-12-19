@@ -12,5 +12,23 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:3.9-management-alpine
+    restart: on-failure
+    environment:
+      - RABBITMQ_DEFAULT_USER=teachio
+      - RABBITMQ_DEFAULT_PASS=teachio
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    profiles: ["rabbitmq"]
+
+  redis:
+    image: redis:6
+    restart: on-failure
+    ports:
+      - "6379:6379"
+
 volumes:
   pgdata: {}

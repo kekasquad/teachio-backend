@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_celery_results',
+    'django_celery_beat',
 
     'core',
     'lesson',
@@ -159,3 +161,13 @@ EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+
+# Celery
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = config(
+    'CELERY_BROKER_URL', default='amqp://teachio:teachio@localhost:5672/%2f')
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_TASK_SERIALIZER = 'json'

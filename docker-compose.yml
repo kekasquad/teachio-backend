@@ -4,14 +4,41 @@ services:
   teachio:
     build: .
     image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
-    ports:
-      - "127.0.0.1:8000:8000"
+    restart: unless-stopped
     restart: always
     environment:
       - "DATABASE_URL=postgres://teachio:s3cret@postgres:5432/teachio"
     env_file: .env
     depends_on:
       - postgres
+
+  worker:
+    image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
+    depends_on:
+      - postgres
+      - redis
+      # - rabbitmq
+    restart: unless-stopped
+    command: "celery -A teachio_backend worker -B --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    environment:
+      - "DATABASE_URL=postgres://teachio:s3cret@postgres:5432/teachio"
+      - "CELERY_BROKER_URL=redis://redis:6379"
+      # - "CELERY_BROKER_URL=amqp://teachio:teachio@rabbitmq:5672/%2f"
+    env_file: .env
+    
+  flower:
+    image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
+    depends_on:
+      - postgres
+      - redis
+      # - rabbitmq
+    restart: unless-stopped
+    command: "celery -A teachio_backend flower"
+    environment:
+      - "DATABASE_URL=postgres://teachio:s3cret@postgres:5432/teachio"
+      - "CELERY_BROKER_URL=redis://redis:6379"
+      # - "CELERY_BROKER_URL=amqp://teachio:teachio@rabbitmq:5672/%2f"
+    env_file: .env
 
   migrations:
     image: ghcr.io/kekasquad/teachio:${IMAGE_TAG:-latest}
@@ -21,19 +48,33 @@ services:
     environment:
       - "DATABASE_URL=postgres://teachio:s3cret@postgres:5432/teachio"
     env_file: .env
-    depends_on:
-      - postgres
     profiles:
       - tools
 
   postgres:
     image: postgres:14-alpine
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=teachio
       - POSTGRES_PASSWORD=s3cret
       - POSTGRES_DB=teachio
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:3.9-management-alpine
+    restart: unless-stopped
+    environment:
+      - RABBITMQ_DEFAULT_USER=teachio
+      - RABBITMQ_DEFAULT_PASS=teachio
+    profiles: ["rabbitmq"]
+
+  redis:
+    image: redis:6
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
 
 volumes:
   pgdata: {}
