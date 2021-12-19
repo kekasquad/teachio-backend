@@ -1,15 +1,18 @@
 from fcm_django.models import FCMDevice
+from firebase_admin.messaging import Message, Notification
 
 
-def send_notification(user_ids,title, message, data):
-   try:
-      device = FCMDevice.objects.filter(user__in=user_ids).first()
-      result = device.send_message(
-          title=title,
-          body=message,
-          data=data,
-          sound=True
-      )
-      return result
-   except:
-      pass
+def send_notification(user_id, title, message, data=None):
+    try:
+        device = FCMDevice.objects.filter(user_id=user_id).first()
+        result = device.send_message(
+            Message(
+                data=data,
+                notification=Notification(
+                    title=title,
+                    body=message
+                ))
+        )
+        return result
+    except:
+        pass
