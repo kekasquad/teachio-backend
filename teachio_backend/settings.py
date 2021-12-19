@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_celery_results',
     'django_celery_beat',
+    'fcm_django',
 
     'core',
     'lesson',
@@ -171,3 +172,8 @@ CELERY_BROKER_URL = config(
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_TASK_SERIALIZER = 'json'
+
+# Firebase
+FCM_DJANGO_SETTINGS = {
+    "FCM_SERVER_KEY": "AAAA9koOvuM:APA91bGGgCLhJcK9nClD6J6Iaxv-zZ5s-Xl8KND_-7tCwKoKsXivc9K5pL9Bq0Coi1qOdrkntluSKS_Iitdo0oo-fVcJw-t4ZzWsutY0eM0vDJF_0oJenJhUp48Kf-1wAnsYTjwtSkEh"
+}
