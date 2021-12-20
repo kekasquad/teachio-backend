@@ -6,4 +6,4 @@ class MessageConfig(AppConfig):
     name = 'message'
 
     def ready(self):
-        import lesson.receivers
+        import message.receivers
