@@ -13,7 +13,7 @@ def lesson_create_update_receiver(sender, instance, created, **kwargs):
             'New lesson',
             f'Lesson {instance.title} created by your teacher {instance.teacher.get_full_name()}!',
             {
-                'lesson_id': instance.id,
+                'lesson_id': str(instance.id),
             }
         )
     elif (
@@ -26,7 +26,7 @@ def lesson_create_update_receiver(sender, instance, created, **kwargs):
             f'Your student {instance.student.get_full_name()} requests confirmation for '
             f'the lesson {instance.title}',
             {
-                'lesson_id': instance.id,
+                'lesson_id': str(instance.id),
             }
         )
     else:
@@ -36,6 +36,6 @@ def lesson_create_update_receiver(sender, instance, created, **kwargs):
             f'Lesson {instance.title} changed by your teacher '
             f'{instance.teacher.get_full_name()}, check for updates now',
             {
-                'lesson_id': instance.id,
+                'lesson_id': str(instance.id),
             }
         )
