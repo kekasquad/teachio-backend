@@ -4,7 +4,7 @@ from firebase_admin.messaging import Message, Notification
 
 def send_notification(user_id, title, message, data=None):
     try:
-        device = FCMDevice.objects.filter(user_id=user_id).first()
+        device = FCMDevice.objects.filter(user_id=user_id, active=True).first()
         result = device.send_message(
             Message(
                 data=data,
