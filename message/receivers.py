@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 @receiver(post_save, sender=Message)
-def message_create_update_receiver(created, instance, **_):
+def message_create_update_receiver(sender, instance, created, **kwargs):
     logger.info(f"Post-save Message: ${created} ${instance!r}")
     if created:
         #         with transaction.atomic():
