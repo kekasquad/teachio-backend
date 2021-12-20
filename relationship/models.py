@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 
 from core.models import TimeStampedModel
 
@@ -20,3 +21,6 @@ class Relationship(TimeStampedModel):
         related_name='teacher_relationship',
         on_delete=models.CASCADE
     )
+
+
+admin.site.register(Relationship)

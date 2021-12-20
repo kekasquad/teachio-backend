@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.contrib import admin
 
 from core.models import TimeStampedModel
 
@@ -30,3 +31,6 @@ class Message(TimeStampedModel):
         related_name='chat_messages',
         on_delete=models.CASCADE
     )
+
+
+admin.site.register(Message)

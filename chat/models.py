@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.contrib import admin
 
 from core.models import TimeStampedModel
 
@@ -36,3 +37,6 @@ class Chat(TimeStampedModel):
         blank=False,
         default=0
     )
+
+
+admin.site.register(Chat)
