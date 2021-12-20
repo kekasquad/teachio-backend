@@ -49,5 +49,5 @@ class LessonPaymentConfirmationRequestView(GenericAPIView):
     def post(self, request, *_, **__):
         lesson = self.get_object()
         lesson.payment_status = Lesson.PaymentStatus.REQUESTED
-        lesson.save()
+        lesson.save(update_fields=['payment_status'])
         return Response(status=status.HTTP_202_ACCEPTED)
