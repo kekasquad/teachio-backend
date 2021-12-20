@@ -6,7 +6,7 @@ from .models import Lesson
 
 
 @receiver(post_save, sender=Lesson)
-def lesson_create_update_receiver(created, instance, **kwargs):
+def lesson_create_update_receiver(sender, instance, created, **kwargs):
     if created:
         send_notification(
             str(instance.student.id),
